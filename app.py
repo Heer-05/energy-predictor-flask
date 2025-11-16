@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # app.py
 from flask import Flask, render_template, request, jsonify
 import numpy as np
@@ -157,7 +157,6 @@ def api_predict():
 
 if __name__ == "__main__":
     app.run(debug=True)
-=======
 # app.py
 from flask import Flask, render_template, request, jsonify
 import numpy as np
@@ -297,4 +296,3 @@ def api_predict():
 
 if __name__ == "__main__":
     app.run(debug=True)
->>>>>>> fa98af3d1fd4129d00db6638e609b68b504c34a1
