@@ -99,7 +99,7 @@ def index():
         prediction=prediction,
         error=error,
         form=form_defaults,
-        active_tab="predict",
+        active_tab="predict",   # for navbar active state
     )
 
 
