@@ -99,7 +99,7 @@ def index():
         prediction=prediction,
         error=error,
         form=form_defaults,
-        active_tab="predict",   # for navbar highlight
+        active_tab="predict",
     )
 
 
@@ -110,17 +110,15 @@ def guidance():
 
 @app.route("/analysis")
 def analysis():
-    # later you can change to render_template("analysis.html", active_tab="analysis")
     return "<h1 style='text-align:center;margin-top:40px;'>Analysis Page Coming Soon</h1>"
 
 
 @app.route("/awareness")
 def awareness():
-    # later you can change to render_template("awareness.html", active_tab="awareness")
     return "<h1 style='text-align:center;margin-top:40px;'>Energy Awareness Page Coming Soon</h1>"
 
 
-# ---------- JSON API endpoint ----------
+# ---------- Optional: JSON API endpoint ----------
 @app.route("/api/predict", methods=["POST"])
 def api_predict():
     """
