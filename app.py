@@ -1,4 +1,3 @@
-# app.py
 from flask import Flask, render_template, request, jsonify
 import numpy as np
 import pandas as pd
@@ -7,10 +6,7 @@ from datetime import datetime
 
 app = Flask(__name__)
 
-# --------------------------------------------------
-# LOAD DATASET (optional – only if you want it later)
-# --------------------------------------------------
-DATA_PATH = "energy_data.csv"  # change if needed
+DATA_PATH = "energy_data.csv"
 try:
     data = pd.read_csv(DATA_PATH)
     if "datetime" in data.columns:
@@ -19,40 +15,28 @@ try:
 except Exception as e:
     print("Could not load CSV:", e)
 
-# --------------------------------------------------
-# LOAD MODEL
-# --------------------------------------------------
 with open("my_cnn_lstm_model.pkl", "rb") as f:
     model = pickle.load(f)
 
-# Day encoding map (same as Streamlit)
 DAY_MAP = {"Mon": 0, "Tue": 1, "Wed": 2, "Thu": 3, "Fri": 4, "Sat": 5, "Sun": 6}
 
 
 def make_input_array(temperature, humidity, wind_speed, hour, day_of_week):
-    """Build input of shape (1, 30, 7) like in your Streamlit code."""
     day_encoded = DAY_MAP[day_of_week]
-
-    # same as your Streamlit: 5 real + 2 dummy features
     base_features = np.array(
         [temperature, humidity, wind_speed, hour, day_encoded, 0.0, 0.0],
         dtype=np.float32,
     )
-
     sequence_30x7 = np.tile(base_features, (30, 1))  # (30, 7)
     input_data = sequence_30x7.reshape(1, 30, 7)      # (1, 30, 7)
     return input_data
 
 
-# --------------------------------------------------
-# ROUTES
-# --------------------------------------------------
 @app.route("/", methods=["GET", "POST"])
 def index():
     prediction = None
     error = None
 
-    # default values for form repopulation
     form_defaults = {
         "temperature": 25,
         "humidity": 50,
@@ -82,12 +66,9 @@ def index():
                 }
             )
 
-            # Build model input
             input_data = make_input_array(
                 temperature, humidity, wind_speed, hour, day_of_week
             )
-
-            # Predict
             pred = model.predict(input_data)
             prediction = float(np.ravel(pred)[0])
 
@@ -99,7 +80,7 @@ def index():
         prediction=prediction,
         error=error,
         form=form_defaults,
-        active_tab="predict",   # for navbar active state
+        active_tab="predict",
     )
 
 
@@ -118,19 +99,8 @@ def awareness():
     return "<h1 style='text-align:center;margin-top:40px;'>Energy Awareness Page Coming Soon</h1>"
 
 
-# ---------- Optional: JSON API endpoint ----------
 @app.route("/api/predict", methods=["POST"])
 def api_predict():
-    """
-    Example JSON POST body:
-    {
-      "temperature": 25,
-      "humidity": 50,
-      "wind_speed": 10,
-      "hour": 12,
-      "day_of_week": "Mon"
-    }
-    """
     try:
         data_json = request.get_json()
         temperature = float(data_json["temperature"])
