@@ -1,4 +1,18 @@
+<<<<<<< HEAD
 venv/
 __pycache__/
 *.pyc
 .env
+=======
+# Ignore virtual env
+venv/
+
+# Ignore Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# VS Code
+.vscode/
+>>>>>>> fa98af3d1fd4129d00db6638e609b68b504c34a1
