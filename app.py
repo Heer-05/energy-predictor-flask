@@ -39,8 +39,8 @@ def make_input_array(temperature, humidity, wind_speed, hour, day_of_week):
         dtype=np.float32,
     )
 
-    sequence_30x7 = np.tile(base_features, (30, 1))  # (30,7)
-    input_data = sequence_30x7.reshape(1, 30, 7)     # (1,30,7)
+    sequence_30x7 = np.tile(base_features, (30, 1))  # (30, 7)
+    input_data = sequence_30x7.reshape(1, 30, 7)      # (1, 30, 7)
     return input_data
 
 
@@ -99,7 +99,26 @@ def index():
         prediction=prediction,
         error=error,
         form=form_defaults,
+        active_tab="predict",       # <-- for navbar highlight
     )
+
+
+@app.route("/guidance")
+def guidance():
+    # Just renders guidance.html; you already designed that page
+    return render_template("guidance.html", active_tab="guidance")
+
+
+@app.route("/analysis")
+def analysis():
+    # You can later turn this into render_template("analysis.html", active_tab="analysis")
+    return "<h1 style='text-align:center;margin-top:40px;'>Analysis Page Coming Soon</h1>"
+
+
+@app.route("/awareness")
+def awareness():
+    # Same here
+    return "<h1 style='text-align:center;margin-top:40px;'>Energy Awareness Page Coming Soon</h1>"
 
 
 # ---------- Optional: JSON API endpoint ----------

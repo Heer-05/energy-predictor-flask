@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Energy Saving Guidance</title>
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+
+    <style>
+        body {
+            background: #eef3ff;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        /* NAVBAR HOVER STYLE */
+        .navbar .nav-link {
+            color: #ffffff !important;
+            padding: 8px 18px;
+            margin: 0 4px;
+            border-radius: 8px;
+            transition: 0.25s ease-in-out;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .navbar .nav-link:hover {
+            background: rgba(255, 255, 255, 0.22);
+            color: #ffffff !important;
+            transform: translateY(-2px);
+        }
+
+        .navbar .nav-link.active {
+            background: rgba(255, 255, 255, 0.35) !important;
+            color: #000 !important;
+            font-weight: 600;
+        }
+
+        /* Page Wrapper */
+        .wrapper {
+            width: 100%;
+            padding: 40px 60px;
+            box-sizing: border-box;
+        }
+
+        /* Blue Header */
+        .header-box {
+            background: linear-gradient(90deg, #0164ff, #1aa3ff);
+            padding: 35px;
+            border-radius: 18px;
+            color: white;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header-box h2 {
+            font-size: 36px;
+            font-weight: 800;
+        }
+
+        .header-box p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        /* Each Info Card */
+        .info-card {
+            background: #fff;
+            border-radius: 14px;
+            padding: 25px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+            border-left: 6px solid #ffd84d;
+            transition: 0.2s;
+        }
+
+        .info-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.1);
+        }
+
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 14px;
+            padding: 20px;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- NAV BAR -->
+<nav class="navbar navbar-expand-lg"
+     style="background: linear-gradient(90deg, #0467f1, #00a9ff); padding: 12px 30px;">
+    <a class="navbar-brand text-white fw-bold" href="/"
+       style="font-size: 22px;">
+        ⚡ AI Energy Forecast
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarNav" aria-controls="navbarNav"
+            aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+                <a class="nav-link {% if active_tab=='analysis' %}active{% endif %}"
+                   href="/analysis">Analysis</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {% if active_tab=='predict' %}active{% endif %}"
+                   href="/">Predict</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {% if active_tab=='guidance' %}active{% endif %}"
+                   href="/guidance">Guidance</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {% if active_tab=='awareness' %}active{% endif %}"
+                   href="/awareness">Awareness</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<!-- CONTENT -->
+<div class="wrapper">
+
+    <div class="header-box">
+        <h2>Practical Energy Saving Guidance</h2>
+        <p>Actionable tips to reduce your bill and save electricity efficiently.</p>
+    </div>
+
+    <div class="row g-4">
+
+        <div class="col-md-4">
+            <div class="info-card">
+                <h5><b>HVAC Optimization</b></h5>
+                <p>
+                    Heating and cooling are the biggest consumers.
+                    Set your thermostat back 7–10°C (12–16°F) for 8 hours a day
+                    to save up to <b>10%</b> on your HVAC energy bill.
+                </p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="info-card" style="border-left-color:#4da3ff;">
+                <h5><b>Vampire Power</b></h5>
+                <p>
+                    Devices like TVs, chargers, speakers still consume power when idle.
+                    Using smart power strips can cut <b>5–10%</b> of passive electricity usage.
+                </p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="info-card" style="border-left-color:#45d57c;">
+                <h5><b>Appliance Scheduling</b></h5>
+                <p>
+                    Run heavy appliances during off-peak hours (night/early morning).
+                    Helps reduce grid load and can lower your TOU electricity rates.
+                </p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="info-card" style="border-left-color:#6f73ff;">
+                <h5><b>Water Heating</b></h5>
+                <p>
+                    Set water heater temperature to <b>50°C</b> (120°F) to reduce
+                    standby heat loss while maintaining comfort and safety.
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<footer>
+    Smart Energy Forecast © 2025. Powered by CNN-LSTM and Flask.
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
