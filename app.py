@@ -25,7 +25,7 @@ except Exception as e:
 # This model must be trained with 6 input features:
 # ['temp', 'dwpt', 'rhum', 'wdir', 'wspd', 'pres']
 # and target = 'Power demand'
-with open("my_cnn_lstm_model (1).pkl", "rb") as f:
+with open("my_cnn_lstm_model.pkl", "rb") as f:
     model = pickle.load(f)
 
 
