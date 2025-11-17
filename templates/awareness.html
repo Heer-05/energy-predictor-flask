@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚡ Practical Energy Saving Guidance</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #3A7BD5; /* A slightly softer blue */
+            --dark-blue: #004d99;
+            --light-blue: #F0F8FF;
+            --text-dark: #333;
+            --text-light: #666;
+            --card-bg-light: #FFFFFF;
+            --card-shadow: rgba(0, 0, 0, 0.1);
+            --header-bg-gradient: linear-gradient(to right, #004d99, #3A7BD5);
+            --section-bg-gradient: linear-gradient(to top right, #3A7BD5, #004d99); /* Blue gradient for the main section */
+            --card-hover-shadow: rgba(0, 0, 0, 0.2);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-blue);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden; /* Prevent horizontal scroll from animations */
+        }
+
+        /* Header Styling */
+        header {
+            background: var(--header-bg-gradient);
+            color: white;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        .logo i {
+            margin-right: 10px;
+            color: #FFD700; /* Gold color for the lightning bolt */
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 5px 0;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 0;
+            height: 2px;
+            background-color: white;
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after,
+        nav ul li a.active::after {
+            width: 100%;
+        }
+        nav ul li a:hover {
+            color: #f0f0f0; /* Slightly lighter on hover */
+        }
+        nav ul li a.active {
+            color: #FFD700; /* Highlight active page */
+        }
+
+
+        /* Main Guidance Section */
+        .guidance-hero {
+            background: var(--section-bg-gradient);
+            color: white;
+            padding: 80px 40px;
+            text-align: center;
+            border-radius: 0 0 50% 50% / 0 0 10% 10%; /* Curved bottom border */
+            transform: scaleX(1.05); /* Slight stretch for visual effect */
+            margin-bottom: 50px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            animation: fadeInScale 1s ease-out forwards;
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scaleX(0.95) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: scaleX(1.05) translateY(0);
+            }
+        }
+
+        .guidance-hero h1 {
+            font-size: 3.2rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .guidance-hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Guidance Cards Layout */
+        .guidance-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 0 40px;
+            max-width: 1200px;
+            margin: -50px auto 50px auto; /* Overlap with hero section */
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Individual Card Styling */
+        .card {
+            background: var(--card-bg-light);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 25px var(--card-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border-left: 8px solid; /* For colored left border */
+            animation: cardFadeIn 0.6s ease-out forwards;
+            opacity: 0; /* Start hidden for animation */
+            transform: translateY(20px);
+        }
+
+        @keyframes cardFadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Delay for card animations */
+        .card:nth-child(1) { animation-delay: 0.2s; }
+        .card:nth-child(2) { animation-delay: 0.3s; }
+        .card:nth-child(3) { animation-delay: 0.4s; }
+        .card:nth-child(4) { animation-delay: 0.5s; }
+        .card:nth-child(5) { animation-delay: 0.6s; }
+
+        .card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 35px var(--card-hover-shadow);
+            cursor: pointer;
+        }
+
+        /* Card specific colors for the left border */
+        .card.hvac { border-color: #FFA500; } /* Orange */
+        .card.vampire { border-color: #8A2BE2; } /* BlueViolet */
+        .card.appliance { border-color: #28a745; } /* Green */
+        .card.water-heating { border-color: #DC143C; } /* Crimson */
+        .card.lighting { border-color: #FFD700; } /* Gold */
+
+        .card h2 {
+            font-size: 1.8rem;
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: var(--dark-blue);
+        }
+
+        .card p {
+            font-size: 1rem;
+            color: var(--text-light);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px;
+            background-color: var(--dark-blue);
+            color: white;
+            font-size: 0.9rem;
+            margin-top: 50px;
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 15px 20px;
+            }
+            nav ul {
+                margin-top: 15px;
+                justify-content: center;
+            }
+            nav ul li {
+                margin: 0 15px;
+            }
+            .guidance-hero {
+                padding: 60px 20px;
+                border-radius: 0 0 30% 30% / 0 0 5% 5%;
+            }
+            .guidance-hero h1 {
+                font-size: 2.5rem;
+            }
+            .guidance-hero p {
+                font-size: 1rem;
+            }
+            .guidance-cards {
+                grid-template-columns: 1fr;
+                padding: 0 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.3rem;
+            }
+            nav ul li {
+                margin: 0 10px;
+            }
+            nav ul li a {
+                font-size: 0.9rem;
+            }
+            .guidance-hero h1 {
+                font-size: 2rem;
+            }
+            .card h2 {
+                font-size: 1.5rem;
+            }
+            .card p {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <i class="fas fa-bolt"></i> AI Energy Forecast
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Analysis</a></li>
+                <li><a href="predict.html">Predict</a></li>
+                <li><a href="guidance.html" class="active">Guidance</a></li>
+                <li><a href="awareness.html">Awareness</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="guidance-hero">
+            <h1>Practical Energy Saving Guidance</h1>
+            <p>Actionable tips to reduce your bill and save electricity efficiently. Make smart choices for a greener future and a lighter wallet!</p>
+        </section>
+
+        <section class="guidance-cards">
+            <div class="card hvac">
+                <h2>HVAC Optimization</h2>
+                <p>Heating and cooling are the biggest consumers. Set your thermostat back <b>7–10°C (12–16°F)</b> for 8 hours a day to save up to <b>10%</b> on your HVAC energy bill.</p>
+            </div>
+
+            <div class="card vampire">
+                <h2>Vampire Power</h2>
+                <p>Devices like TVs, chargers, speakers still consume power when idle. Using smart power strips can cut <b>5–10%</b> of passive electricity usage.</p>
+            </div>
+
+            <div class="card appliance">
+                <h2>Appliance Scheduling</h2>
+                <p>Run heavy appliances during off-peak hours (night/early morning). Helps reduce grid load and can lower your TOU electricity rates.</p>
+            </div>
+
+            <div class="card water-heating">
+                <h2>Water Heating</h2>
+                <p>Set water heater temperature to <b>50°C (120°F)</b> to reduce standby heat loss while maintaining comfort and safety.</p>
+            </div>
+
+            <div class="card lighting">
+                <h2>Efficient Lighting</h2>
+                <p>Switch to **LED bulbs** wherever possible. They use up to <b>80% less energy</b> and last 25 times longer than traditional incandescent bulbs.</p>
+            </div>
+            
+            </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 AI Energy Forecast. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
