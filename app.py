@@ -21,24 +21,24 @@ except Exception as e:
 # ------------------------------------------
 # LOAD TRAINED CNN-LSTM MODEL
 # ------------------------------------------
+# IMPORTANT:
+# This model must be trained with 6 input features:
+# ['temp', 'dwpt', 'rhum', 'wdir', 'wspd', 'pres']
+# and target = 'Power demand'
 with open("my_cnn_lstm_model.pkl", "rb") as f:
     model = pickle.load(f)
 
-# Model was trained on 7 features:
-# ['Power demand', 'temp', 'dwpt', 'rhum', 'wdir', 'wspd', 'pres']
 
-
-def make_input_array(power_demand, temp, dew_point, humidity,
+def make_input_array(temp, dew_point, humidity,
                      wind_dir, wind_speed, pressure):
     """
-    Build input of shape (1, 30, 7) for the CNN-LSTM model.
+    Build input of shape (1, 30, 6) for the CNN-LSTM model.
 
     Feature order MUST match training:
-    [Power demand, temp, dwpt, rhum, wdir, wspd, pres]
+    [temp, dwpt, rhum, wdir, wspd, pres]
     """
     base_features = np.array(
         [
-            power_demand,   # Power demand
             temp,           # temp
             dew_point,      # dwpt
             humidity,       # rhum
@@ -50,8 +50,8 @@ def make_input_array(power_demand, temp, dew_point, humidity,
     )
 
     # Repeat same feature vector for 30 time steps
-    sequence_30x7 = np.tile(base_features, (30, 1))  # (30, 7)
-    input_data = sequence_30x7.reshape(1, 30, 7)     # (1, 30, 7)
+    sequence_30x6 = np.tile(base_features, (30, 1))  # (30, 6)
+    input_data = sequence_30x6.reshape(1, 30, 6)     # (1, 30, 6)
     return input_data
 
 
@@ -65,7 +65,6 @@ def index():
 
     # default values for form
     form_defaults = {
-        "power_demand": 100.0,
         "temperature": 25.0,
         "dew_point": 20.0,
         "humidity": 50.0,
@@ -77,7 +76,6 @@ def index():
 
     if request.method == "POST":
         try:
-            power_demand = float(request.form.get("power_demand", 100.0))
             temperature = float(request.form.get("temperature", 25.0))
             dew_point = float(request.form.get("dew_point", 20.0))
             humidity = float(request.form.get("humidity", 50.0))
@@ -92,7 +90,6 @@ def index():
             # keep values to re-fill the form
             form_defaults.update(
                 {
-                    "power_demand": power_demand,
                     "temperature": temperature,
                     "dew_point": dew_point,
                     "humidity": humidity,
@@ -103,9 +100,8 @@ def index():
                 }
             )
 
-            # Build model input
+            # Build model input (NO power_demand passed in)
             input_data = make_input_array(
-                power_demand,
                 temperature,
                 dew_point,
                 humidity,
@@ -114,7 +110,7 @@ def index():
                 pressure,
             )
 
-            # Predict
+            # Predict power demand
             pred = model.predict(input_data)
             prediction = float(np.ravel(pred)[0])
 
@@ -152,7 +148,6 @@ def api_predict():
     JSON body should be:
 
     {
-      "power_demand": 100,
       "temperature": 25,
       "dew_point": 20,
       "humidity": 50,
@@ -164,7 +159,6 @@ def api_predict():
     try:
         data_json = request.get_json()
 
-        power_demand = float(data_json["power_demand"])
         temperature = float(data_json["temperature"])
         dew_point = float(data_json["dew_point"])
         humidity = float(data_json["humidity"])
@@ -173,7 +167,6 @@ def api_predict():
         pressure = float(data_json["pressure"])
 
         input_data = make_input_array(
-            power_demand,
             temperature,
             dew_point,
             humidity,
@@ -185,7 +178,7 @@ def api_predict():
         pred = model.predict(input_data)
         prediction = float(np.ravel(pred)[0])
 
-        return jsonify({"prediction_kwh": prediction})
+        return jsonify({"power_demand": prediction})
 
     except Exception as e:
         return jsonify({"error": str(e)}), 400
