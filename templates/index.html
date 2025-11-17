@@ -63,7 +63,7 @@
             margin: 40px auto;
         }
 
-        .container{
+        .container {
             height: 100vh !important;
             width: 100vw !important;
             box-sizing: border-box;
@@ -123,18 +123,19 @@
 <body>
 
 <!-- NAV BAR -->
-<nav class="navbar navbar-expand-lg navbar-dark">
-    <a class="navbar-brand text-white" href="/">⚡ AI Energy Forecast</a>
+<nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand text-white fw-bold" href="/" style="font-size: 22px;">
+        ⚡ AI Energy Forecast
+    </a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-            data-bs-target="#navbarNav" aria-controls="navbarNav"
-            aria-expanded="false" aria-label="Toggle navigation">
+            data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+            aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
-
             <li class="nav-item">
                 <a class="nav-link {% if active_tab=='analysis' %}active{% endif %}"
                    href="/analysis">Analysis</a>
@@ -154,7 +155,6 @@
                 <a class="nav-link {% if active_tab=='awareness' %}active{% endif %}"
                    href="/awareness">Awareness</a>
             </li>
-
         </ul>
     </div>
 </nav>
@@ -171,7 +171,15 @@
         <h4 class="mb-3">Enter Prediction Parameters</h4>
 
         <form method="POST" action="/">
+            <!-- Row 1: demand + temperature + dew point -->
             <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label for="power_demand" class="form-label">Recent Power Demand (kWh)</label>
+                    <input type="number" step="0.1" class="form-control"
+                           id="power_demand" name="power_demand"
+                           value="{{ form.power_demand }}">
+                </div>
+
                 <div class="col-md-4 mb-3">
                     <label for="temperature" class="form-label">Temperature (°C)</label>
                     <input type="number" step="0.1" class="form-control"
@@ -180,7 +188,17 @@
                 </div>
 
                 <div class="col-md-4 mb-3">
-                    <label for="humidity" class="form-label">Humidity (%)</label>
+                    <label for="dew_point" class="form-label">Dew Point (°C)</label>
+                    <input type="number" step="0.1" class="form-control"
+                           id="dew_point" name="dew_point"
+                           value="{{ form.dew_point }}">
+                </div>
+            </div>
+
+            <!-- Row 2: humidity, wind speed, pressure -->
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label for="humidity" class="form-label">Relative Humidity (%)</label>
                     <input type="number" step="0.1" class="form-control"
                            id="humidity" name="humidity"
                            value="{{ form.humidity }}">
@@ -192,27 +210,26 @@
                            id="wind_speed" name="wind_speed"
                            value="{{ form.wind_speed }}">
                 </div>
+
+                <div class="col-md-4 mb-3">
+                    <label for="pressure" class="form-label">Pressure (hPa)</label>
+                    <input type="number" step="0.1" class="form-control"
+                           id="pressure" name="pressure"
+                           value="{{ form.pressure }}">
+                </div>
             </div>
 
+            <!-- Row 3: wind direction + display date -->
             <div class="row">
-                <div class="col-md-4 mb-3">
-                    <label for="hour" class="form-label">Hour of Day (0–23)</label>
-                    <input type="number" min="0" max="23" class="form-control"
-                           id="hour" name="hour"
-                           value="{{ form.hour }}">
+                <div class="col-md-6 mb-3">
+                    <label for="wind_direction" class="form-label">Wind Direction (°)</label>
+                    <input type="number" step="1" class="form-control"
+                           id="wind_direction" name="wind_direction"
+                           value="{{ form.wind_direction }}">
                 </div>
 
-                <div class="col-md-4 mb-3">
-                    <label for="day_of_week" class="form-label">Day of Week</label>
-                    <select id="day_of_week" name="day_of_week" class="form-select">
-                        {% for d in ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"] %}
-                            <option value="{{ d }}" {% if form.day_of_week == d %}selected{% endif %}>{{ d }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-
-                <div class="col-md-4 mb-3">
-                    <label for="forecast_date" class="form-label">Forecast Date</label>
+                <div class="col-md-6 mb-3">
+                    <label for="forecast_date" class="form-label">Forecast Date (for display)</label>
                     <input type="date" class="form-control"
                            id="forecast_date" name="forecast_date"
                            value="{{ form.forecast_date }}">
